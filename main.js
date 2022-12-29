@@ -8,6 +8,7 @@ const buttonChuva = document.querySelector('.chuva');
 const buttonCafeteria = document.querySelector('.cafeteria');
 const buttonLareira = document.querySelector('.lareira');
 const buttonPlay = document.querySelector('.play');
+const buttonPause = document.querySelector('.pause');
 const buttonStop = document.querySelector('.stop');
 const buttonUpTimer = document.querySelector('.upTimer');
 const buttonDownTimer = document.querySelector('.downTimer');
@@ -16,6 +17,20 @@ const displayMinutes = document.querySelector('.minutos');
 const displaySeconds = document.querySelector('.segundos');
 let minutes = Number(displayMinutes.textContent);
 
+const volFloresta = document.querySelector('.volFloresta');
+const volChuva = document.querySelector('.volChuva');
+const volCafeteria = document.querySelector('.volCafeteria');
+const volLareira = document.querySelector('.volLareira');
+
+const inputFloresta = document.querySelector('.volFloresta')
+const inputChuva= document.querySelector('.volChuva')
+const inputCafeteria = document.querySelector('.volCafeteria')
+const inputLareira = document.querySelector('.volLareira')
+
+
+
+
+/* MODO DARK AND LIGHT*/
 modeDark.addEventListener('click', () => {
     modeDark.classList.add('hide');
     modeLight.classList.remove('hide');
@@ -45,6 +60,20 @@ const soundEnd = new Audio(
     'https://github.com/maykbrito/automatic-video-creator/blob/master/audios/kichen-timer.mp3?raw=true'
 );
 
+/*EVENTOS PARA CONTROLAR O VOLUME DO AUDIO*/
+volFloresta.addEventListener('click', () => {
+    soundFloresta.volume = volFloresta.value
+})
+volChuva.addEventListener('click', () => {
+    soundChuva.volume = volChuva.value
+})
+volCafeteria.addEventListener('click', () => {
+    soundCafeteria.volume = volCafeteria.value
+})
+volLareira.addEventListener('click', () => {
+    soundLareira.volume = volLareira.value
+})
+
 /* COUNTDOWN */
 
 function countDown() {
@@ -63,19 +92,6 @@ function countDown() {
             --minutes;
         }
 
-        buttonUpTimer.addEventListener('click', () => {
-            displayMinutes.textContent = String(minutes + 5).padStart(2, '0');
-        });
-
-        buttonDownTimer.addEventListener('click', () => {
-            minutes <= 5
-                ? displayMinutes.textContent == String(minutes).padStart(2, '0')
-                : (displayMinutes.textContent = String(minutes - 5).padStart(
-                      2,
-                      '0'
-                  ));
-        });
-
         displayMinutes.textContent = String(minutes).padStart(2, '0');
         displaySeconds.textContent = String(seconds - 1).padStart(2, '0');
 
@@ -85,11 +101,37 @@ function countDown() {
 
 /*  FUNÇÕES BUTTONS TIMER */
 buttonPlay.addEventListener('click', () => {
+    buttonPlay.classList.add('hide')
+    buttonPause.classList.remove('hide')
     countDown();
 });
 
-buttonStop.addEventListener('click', () => {
+buttonPause.addEventListener('click', () => {
+    buttonPlay.classList.remove('hide')
+    buttonPause.classList.add('hide')
+
     clearTimeout(pauseTimer);
+});
+
+buttonStop.addEventListener('click', () => {
+    displayMinutes.textContent = String(minutes).padStart(2, '0');
+    displaySeconds.textContent = String(00).padStart(2, '0');
+    buttonPlay.classList.remove('hide')
+    buttonPause.classList.add('hide')
+    clearTimeout(pauseTimer);
+});
+
+buttonUpTimer.addEventListener('click', () => {
+    displayMinutes.textContent = String(minutes += 5).padStart(2, '0');
+});
+
+buttonDownTimer.addEventListener('click', () => {
+    minutes <= 5
+        ? displayMinutes.textContent == String(minutes).padStart(2, '0')
+        : (displayMinutes.textContent = String(minutes -= 5).padStart(
+              2,
+              '0'
+          ));
 });
 
 /*  DEIXAR SEMPRE O SOM SEMPRE REPETINDO */
@@ -123,7 +165,6 @@ function soundsLareira() {
     soundCafeteria.pause();
     soundLareira.play();
 }
-
 function soundOff() {
     soundFloresta.pause();
     soundChuva.pause();
@@ -133,86 +174,108 @@ function soundOff() {
 
 /* INTERAÇOES NA TELA DO USUARIO BUTOES SONDS*/
 buttonFloresta.addEventListener('click', () => {
-    buttonFloresta.classList.toggle('selected') == true
+    buttonFloresta.classList.toggle('selectedButton') == true
         ? soundsFloresta()
         : soundOff();
     document
         .querySelector('.floresta svg path')
         .classList.toggle('selectedFill');
-    buttonChuva.classList.remove('selected');
+    buttonChuva.classList.remove('selectedButton');
     document.querySelector('.chuva svg path').classList.remove('selectedFill');
-    buttonCafeteria.classList.remove('selected');
+    buttonCafeteria.classList.remove('selectedButton');
     document
         .querySelector('.cafeteria svg path')
         .classList.remove('selectedFill');
 
-    buttonLareira.classList.remove('selected');
+    buttonLareira.classList.remove('selectedButton');
     document
         .querySelector('.lareira svg path')
         .classList.remove('selectedFill');
+    inputFloresta.classList.toggle('selectedBody') == true ? inputFloresta.classList.add('selectedBody') : inputFloresta.classList.remove('selectedBody')    
+    inputChuva.classList.remove('selectedBody')
+    inputCafeteria.classList.remove('selectedBody')
+    inputLareira.classList.remove('selectedBody')
 });
 buttonChuva.addEventListener('click', () => {
-    buttonFloresta.classList.remove('selected');
+    buttonFloresta.classList.remove('selectedButton');
     document
         .querySelector('.floresta svg path')
         .classList.remove('selectedFill');
-    buttonChuva.classList.toggle('selected') == true
+    buttonChuva.classList.toggle('selectedButton') == true
         ? soundsChuva()
         : soundOff();
     document.querySelector('.chuva svg path').classList.toggle('selectedFill');
-    buttonCafeteria.classList.remove('selected');
+    buttonCafeteria.classList.remove('selectedButton');
     document
         .querySelector('.cafeteria svg path')
         .classList.remove('selectedFill');
-    buttonLareira.classList.remove('selected');
+    buttonLareira.classList.remove('selectedButton');
     document
         .querySelector('.lareira svg path')
         .classList.remove('selectedFill');
+    inputFloresta.classList.remove('selectedBody')
+    inputChuva.classList.toggle('selectedBody') == true ? inputChuva.classList.add('selectedBody') : inputChuva.classList.remove('selectedBody')
+    inputCafeteria.classList.remove('selectedBody')
+    inputLareira.classList.remove('selectedBody')
+    
+
 });
 buttonCafeteria.addEventListener('click', () => {
-    buttonFloresta.classList.remove('selected');
+    buttonFloresta.classList.remove('Button');
     document
         .querySelector('.floresta svg path')
         .classList.remove('selectedFill');
-    buttonChuva.classList.remove('selected');
+    buttonChuva.classList.remove('selectedButton');
     document.querySelector('.chuva svg path').classList.remove('selectedFill');
-    buttonCafeteria.classList.toggle('selected') == true
+    buttonCafeteria.classList.toggle('selectedButton') == true
         ? soundsCafeteria()
         : soundOff();
     document
         .querySelector('.cafeteria svg path')
         .classList.toggle('selectedFill');
-    buttonLareira.classList.remove('selected');
+    buttonLareira.classList.remove('selectedButton');
     document
         .querySelector('.lareira svg path')
         .classList.remove('selectedFill');
+        
+    inputFloresta.classList.remove('selectedBody')
+    inputChuva.classList.remove('selectedBody')
+    inputCafeteria.classList.toggle('selectedBody') == true ? inputCafeteria.classList.add('selectedBody') : inputCafeteria.classList.remove('selectedBody')
+    inputLareira.classList.remove('selectedBody')
+    
+
 });
 buttonLareira.addEventListener('click', () => {
-    buttonFloresta.classList.remove('selected');
+    buttonFloresta.classList.remove('selectedButton');
     document
         .querySelector('.floresta svg path')
         .classList.remove('selectedFill');
-    buttonChuva.classList.remove('selected');
+    buttonChuva.classList.remove('selectedButton');
     document.querySelector('.chuva svg path').classList.remove('selectedFill');
-    buttonCafeteria.classList.remove('selected');
+    buttonCafeteria.classList.remove('selectedButton');
     document
         .querySelector('.cafeteria svg path')
         .classList.remove('selectedFill');
-    buttonLareira.classList.toggle('selected') == true
+    buttonLareira.classList.toggle('selectedButton') == true
         ? soundsLareira()
         : soundOff();
     document
         .querySelector('.lareira svg path')
         .classList.toggle('selectedFill');
+    inputFloresta.classList.remove('selectedBody')
+    inputChuva.classList.remove('selectedBody')
+    inputCafeteria.classList.remove('selectedBody')
+    inputLareira.classList.toggle('selectedBody') == true ? inputLareira.classList.add('selectedBody') : inputLareira.classList.remove('selectedBody')
+
 });
 
 /*FUNÇÃO PARA DESABALITAR TUDO RELACIONADO AO BUTÕES DE SOM*/
 function closePressButtonEsc(event) {
     if (event.key === 'Escape') {
-        buttonFloresta.classList.remove('selected');
-        buttonChuva.classList.remove('selected');
-        buttonCafeteria.classList.remove('selected');
-        buttonLareira.classList.remove('selected');
+        buttonFloresta.classList.remove('selectedButton');
+        buttonChuva.classList.remove('selectedButton');
+        buttonCafeteria.classList.remove('selectedButton');
+        buttonLareira.classList.remove('selectedButton');
         soundOff();
         document
             .querySelector('.floresta svg path')
@@ -226,5 +289,9 @@ function closePressButtonEsc(event) {
         document
             .querySelector('.lareira svg path')
             .classList.remove('selectedFill');
+        inputFloresta.classList.remove('selectedBody')
+        inputChuva.classList.remove('selectedBody')
+        inputCafeteria.classList.remove('selectedBody')
+        inputLareira.classList.remove('selectedBody')
     }
 }

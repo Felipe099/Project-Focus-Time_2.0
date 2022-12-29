@@ -20,7 +20,7 @@
 :root .bodyDark {
     --bg-color: #121214;
     --bg-button: #29292e;
-    --border-svg-fill: #ffffff;
+    --border-svg-fill: #C4C4CC;
     --border-selected-fill: #ffffff;
     --bg-selected-fill: #0a3442;
     --color-timer: #ffffff;
@@ -72,7 +72,6 @@ main {
     margin-top: 2rem;
 }
 .buttons-timer button {
-    
     background: transparent;
     border: none;
     cursor: pointer;
@@ -100,16 +99,22 @@ main {
     cursor: pointer;
 
     transition: background 0.3s;
-    
+
     outline: none;
     position: relative;
     justify-items: center;
-    
 }
+
+ .display-button {
+    display: grid;
+    position: relative;
+    justify-items: center;
+}
+
 
 .buttons-sound svg {
     margin-top: 2.4rem;
-};
+}
 
 .buttons-timer svg path {
     fill: var(--bg-svg-fill);
@@ -119,24 +124,30 @@ main {
     fill: var(--border-svg-fill);
 }
 
-.page .selected {
+.page .selectedButton {
     background: var(--bg-selected-fill);
 }
 
-.page .selectedFill{
+.page .selectedFill {
     fill: #ffffff;
+}
 
+.page .selectedInput {
+    background: #ffffff;
+}
+
+.page .selectedBody {
+    background: #ffffff;
 }
 
 input {
-    position: absolute;
-    bottom: 2.4rem;
     width: 9rem;
-
+    position: absolute;
+    bottom: 3rem;
     -webkit-appearance: none;
     outline: none;
-    height: .4rem;
-    border-radius: .5rem;
+    height: 0.4rem;
+    border-radius: 0.5rem;
     cursor: pointer;
     background: var(--bg-range);
 }
@@ -146,8 +157,6 @@ input::-webkit-slider-thumb {
     appearance: none;
     width: 1.6rem;
     height: 1.6rem;
-    border-radius: 50%; 
+    border-radius: 50%;
     background: var(--bg-range);
-
 }
-
