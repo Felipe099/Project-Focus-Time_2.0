@@ -5,5 +5,5 @@ Colocar Funcionalidades
 
 Resolver bugs
 
-1 - Quando o timer acabar voltar pro timer inicial
+1 - Quando o timer acabar voltar pro timer  ✅
 2 - Quando selecionar o batao o backgound do icone tem q mudar para branco ✅

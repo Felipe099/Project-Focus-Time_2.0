@@ -1,4 +1,8 @@
 /* VARIAVEIS PARA PEGAR O ELEMENTO DO HTML */
+const theme = document.querySelector('body');
+const modeDark = document.querySelector('.themeDark');
+const modeLight = document.querySelector('.themeLight');
+
 const buttonFloresta = document.querySelector('.floresta');
 const buttonChuva = document.querySelector('.chuva');
 const buttonCafeteria = document.querySelector('.cafeteria');
@@ -10,6 +14,24 @@ const buttonDownTimer = document.querySelector('.downTimer');
 let timer;
 const displayMinutes = document.querySelector('.minutos');
 const displaySeconds = document.querySelector('.segundos');
+let minutes = Number(displayMinutes.textContent);
+
+modeDark.addEventListener('click', () => {
+    modeDark.classList.add('hide');
+    modeLight.classList.remove('hide');
+    theme.classList.remove('bodyDark');
+});
+
+modeLight.addEventListener('click', () => {
+    modeDark.classList.remove('hide');
+    modeLight.classList.add('hide');
+    theme.classList.add('bodyDark');
+});
+
+/*QUANDO ACABA O TIMER O CODIGO VOLTA PARA O INICIAL*/
+function resetTimer() {
+    displayMinutes.textContent = String(minutes).padStart(2, '0');
+}
 
 /* TIRAR O SELECTED DO BOTAO SOUND*/
 window.addEventListener('keydown', closePressButtonEsc);
@@ -32,6 +54,7 @@ function countDown() {
 
         if (minutes <= 0 && seconds <= 0) {
             soundEnd.play();
+            resetTimer();
             return;
         }
 
@@ -40,9 +63,18 @@ function countDown() {
             --minutes;
         }
 
-        updateDisplayUpTimer();
+        buttonUpTimer.addEventListener('click', () => {
+            displayMinutes.textContent = String(minutes + 5).padStart(2, '0');
+        });
 
-        updateDisplayUpDown();
+        buttonDownTimer.addEventListener('click', () => {
+            minutes <= 5
+                ? displayMinutes.textContent == String(minutes).padStart(2, '0')
+                : (displayMinutes.textContent = String(minutes - 5).padStart(
+                      2,
+                      '0'
+                  ));
+        });
 
         displayMinutes.textContent = String(minutes).padStart(2, '0');
         displaySeconds.textContent = String(seconds - 1).padStart(2, '0');
@@ -59,23 +91,6 @@ buttonPlay.addEventListener('click', () => {
 buttonStop.addEventListener('click', () => {
     clearTimeout(pauseTimer);
 });
-
-function updateDisplayUpTimer() {
-    buttonUpTimer.addEventListener('click', () => {
-        displayMinutes.textContent = String(minutes + 5).padStart(2, '0');
-    });
-}
-
-function updateDisplayUpDown() {
-    buttonDownTimer.addEventListener('click', () => {
-        minutes <= 5
-            ? displayMinutes.textContent == String(minutes).padStart(2, '0')
-            : (displayMinutes.textContent = String(minutes - 5).padStart(
-                  2,
-                  '0'
-              ));
-    });
-}
 
 /*  DEIXAR SEMPRE O SOM SEMPRE REPETINDO */
 soundFloresta.loop = true;
@@ -116,7 +131,6 @@ function soundOff() {
     soundLareira.pause();
 }
 
-
 /* INTERAÇOES NA TELA DO USUARIO BUTOES SONDS*/
 buttonFloresta.addEventListener('click', () => {
     buttonFloresta.classList.toggle('selected') == true
@@ -125,7 +139,6 @@ buttonFloresta.addEventListener('click', () => {
     document
         .querySelector('.floresta svg path')
         .classList.toggle('selectedFill');
-
     buttonChuva.classList.remove('selected');
     document.querySelector('.chuva svg path').classList.remove('selectedFill');
     buttonCafeteria.classList.remove('selected');
