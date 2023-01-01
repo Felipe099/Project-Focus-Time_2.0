@@ -221,7 +221,7 @@ buttonChuva.addEventListener('click', () => {
 
 });
 buttonCafeteria.addEventListener('click', () => {
-    buttonFloresta.classList.remove('Button');
+    buttonFloresta.classList.remove('selectedButton');
     document
         .querySelector('.floresta svg path')
         .classList.remove('selectedFill');
